@@ -7,6 +7,8 @@ import SearchBarComp from "././compoent/SearchBarComp";
 import VideoDetailComp from "././compoent/VideoDetailsComp";
 import VideoList from "././compoent/VideoList";
 
+import { Typography } from "@material-ui/core";
+
 const App = () => {
   const [videos, setVideos] = useState([]);
   const [selectedVideo, setSelectedVideo] = useState({ id: {}, snippet: {} });
@@ -15,21 +17,26 @@ const App = () => {
 
   }
   return (
-    <Grid style={{ justifyContent: "center" }} container spacing={10}>
-      <Grid item xs={11}>
-        <Grid container spacing={10}>
-          <Grid item xs={12}>
-            <SearchBarComp onSubmit={handleSubmit} />
-          </Grid>
-          <Grid item xs={8}>
-            <VideoDetailComp video={selectedVideo} />
-          </Grid>
-          <Grid item xs={4}>
-            <VideoList videos={videos} onVideoSelect={onVideoSelect} />
+    <>
+      <Typography variant="h1" component="h2" style={{ justifyContent: 'center',color:'red'}}>
+        Youtube Clone
+      </Typography>
+      <Grid style={{ justifyContent: "center" }} container spacing={10}>
+        <Grid item xs={11}>
+          <Grid container spacing={10}>
+            <Grid item xs={12}>
+              <SearchBarComp onSubmit={handleSubmit} />
+            </Grid>
+            <Grid item xs={8}>
+              <VideoDetailComp video={selectedVideo} />
+            </Grid>
+            <Grid item xs={4}>
+              <VideoList videos={videos} onVideoSelect={onVideoSelect} />
+            </Grid>
           </Grid>
         </Grid>
       </Grid>
-    </Grid>
+    </>
   );
 
   async function handleSubmit(searchTerm) {
