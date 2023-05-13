@@ -1,38 +1,45 @@
-import React from 'react';
-import './App.css';
-//import material ui grid
-import { Grid } from '@material-ui/core';
-import SearchBarComp from '././compoent/SearchBarComp';
-import youtube from './api/youtube';
+import React, { useState } from "react";
+import { Grid } from "@material-ui/core";
+import youtube from "./api/youtube";
 
-function App() {
+//import components
+import SearchBarComp from "././compoent/SearchBarComp";
+import VideoDetailComp from "././compoent/VideoDetailsComp";
+
+const App = () => {
+  const [videos, setVideos] = useState([]);
+  const [selectedVideo, setSelectedVideo] = useState({ id: {}, snippet: {} });
 
   return (
-    <Grid justify="center" container spacing={16} style={{ justifyContent: 'center' }}>
-      <Grid item xs={12}>
-        <Grid container spacing={16}>
-          <SearchBarComp onSubmit={onSubmit} />
-        </Grid>
+    <Grid style={{ justifyContent: "center" }} container spacing={10}>
+      <Grid item xs={11}>
         <Grid container spacing={10}>
-          {/*video detail*/}
-        </Grid>
-        <Grid container spacing={4}>
-          {/*video list*/}
+          <Grid item xs={12}>
+            <SearchBarComp onSubmit={handleSubmit} />
+          </Grid>
+          <Grid item xs={8}>
+            <VideoDetailComp video={selectedVideo} />
+          </Grid>
+          <Grid item xs={4}>
+            {/*<VideoList videos={videos} onVideoSelect={setSelectedVideo} />*/}
+          </Grid>
         </Grid>
       </Grid>
     </Grid>
   );
 
-  async function onSubmit(searchTerm) {
-    const response = await youtube.get('search', {
+  async function handleSubmit(searchTerm) {
+    const { data: { items: videos } } = await youtube.get("search", {
       params: {
-        part: 'snippet',
+        part: "snippet",
         maxResults: 5,
-        key:'AIzaSyCAe-j2iPxCQU9HXfRWbrypEaicbre_5l8',
-        q: searchTerm //search term
-      } //search term
-    })
-    console.log(response.data.items);
+        key: "AIzaSyCAe-j2iPxCQU9HXfRWbrypEaicbre_5l8",
+        q: searchTerm,
+      }
+    });
+
+    setVideos(videos);
+    setSelectedVideo(videos[0]);
   }
 }
 
