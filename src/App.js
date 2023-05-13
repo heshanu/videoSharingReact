@@ -5,11 +5,15 @@ import youtube from "./api/youtube";
 //import components
 import SearchBarComp from "././compoent/SearchBarComp";
 import VideoDetailComp from "././compoent/VideoDetailsComp";
+import VideoList from "././compoent/VideoList";
 
 const App = () => {
   const [videos, setVideos] = useState([]);
   const [selectedVideo, setSelectedVideo] = useState({ id: {}, snippet: {} });
 
+  const onVideoSelect = (video) => {
+
+  }
   return (
     <Grid style={{ justifyContent: "center" }} container spacing={10}>
       <Grid item xs={11}>
@@ -21,7 +25,7 @@ const App = () => {
             <VideoDetailComp video={selectedVideo} />
           </Grid>
           <Grid item xs={4}>
-            {/*<VideoList videos={videos} onVideoSelect={setSelectedVideo} />*/}
+            <VideoList videos={videos} onVideoSelect={onVideoSelect} />
           </Grid>
         </Grid>
       </Grid>
